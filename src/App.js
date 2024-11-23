@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import TaskForm from './components/TaskForm';
+import TaskList from './components/TaskList';
+import TaskFilter from './components/TaskFilter';
+import { TaskProvider } from './context/TaskContext';
+import './index.css';
 
-function App() {
+const App = () => {
+  const [editingTask, setEditingTask] = useState(null); // Add editing task state
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TaskProvider>
+      <div className="app-container">
+        <h1>Task Manager</h1>
+        <TaskForm />
+        <TaskFilter />
+        <TaskList setEditingTask={setEditingTask} /> {/* Pass setEditingTask as a prop */}
+        {editingTask && (
+          <div>
+            {/* Example modal content */}
+            <p>Editing Task: {editingTask.title}</p>
+          </div>
+        )}
+      </div>
+    </TaskProvider>
   );
-}
+};
 
 export default App;
